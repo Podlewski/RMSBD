@@ -1,0 +1,19 @@
+version: "3.5"
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: rmsbd.db
+    environment:
+      SA_PASSWORD: "Abc12345678"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - c:/data/mssql/data:/var/opt/mssql/data
+    ports:
+      - 1433:1433
+    networks:
+      - rmsbd
+  
+networks:
+  rmsbd:
+    name: rmsbd-network
+    external: false
