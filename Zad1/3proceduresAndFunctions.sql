@@ -3,7 +3,8 @@
 --drop procedure Dodaj_Rezerwacje 
 --GO 
 
-CREATE PROCEDURE Dodaj_rezerwacje(@imie     VARCHAR(100), 
+CREATE
+OR ALTER PROCEDURE Dodaj_rezerwacje(@imie     VARCHAR(100), 
                                   @nazwisko VARCHAR(100), 
                                   @tytul    VARCHAR(100), 
                                   @liczba   INT, 
@@ -77,9 +78,7 @@ GO
 
 --4. zwiekszanie pensji pracowników danego kina
 --drop procedure PodwyzkaProcentowaPracownik
-
-go
-CREATE PROCEDURE PodwyzkaProcentowaPracownik (
+CREATE OR ALTER PROCEDURE PodwyzkaProcentowaPracownik (
 	@imie varchar(100),
 	@nazwisko varchar(100),
 	@Procent float
@@ -130,8 +129,7 @@ GO
 
 --Funkcja oblicza koszty kina
 --drop function SumUoCosts
-go
-CREATE FUNCTION Sumupcosts(@idKino  INT, 
+CREATE OR ALTER FUNCTION Sumupcosts(@idKino  INT, 
                            @rok     INT, 
                            @miesiac INT) 
 returns MONEY 
