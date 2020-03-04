@@ -61,6 +61,7 @@ AS
 
 GO 
 
+/*
 --niepoprawna wartosc
 EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', -3, '2018-09-01'
 GO
@@ -72,3 +73,94 @@ GO
 --poprawna rezerwacja
 EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 GO
+*/
+
+--4. zwiekszanie pensji pracowników danego kina
+--drop procedure PodwyzkaProcentowaPracownik
+
+go
+CREATE PROCEDURE PodwyzkaProcentowaPracownik (
+	@imie varchar(100),
+	@nazwisko varchar(100),
+	@Procent float
+)
+AS
+BEGIN
+	IF @imie IS NULL OR @Procent IS NULL or @nazwisko is null
+		BEGIN
+			print 'Nie podano poprawnych wartosci'
+		END
+	ELSE
+		BEGIN
+			declare @id_prac int
+			set @id_prac = (select id_pracownik from pracownik where nazwisko=@nazwisko and imie = @imie)
+			print @id_prac
+
+			if @id_prac is null
+				begin
+					print 'Nie ma takiego pracownika!'
+				end
+			else
+				begin
+					UPDATE pracownik
+					SET pensja= pensja * (100.0 + @Procent) * 0.01
+					WHERE id_pracownik=@id_prac
+				end
+		END
+END
+go
+
+/*
+-- Przyklad poprawnego wykonania procedury
+SELECT * FROM pracownik WHERE imie='Michal' and nazwisko = 'Pawlak'
+
+exec PodwyzkaProcentowaPracownik 'Michal','Pawlak', 10
+GO
+
+SELECT * FROM pracownik WHERE imie='Michal' and nazwisko = 'Pawlak'
+
+-- Przyklad niepoprawnego wywolania
+exec PodwyzkaProcentowaPracownik 'Michal','Pawlak', null
+GO
+
+-- Przyklad niepoprawnego wywolania
+exec PodwyzkaProcentowaPracownik 'Adam','Skiba', 10
+GO
+*/
+
+--Funkcja oblicza koszty kina
+--drop function SumUoCosts
+go
+CREATE FUNCTION Sumupcosts(@idKino  INT, 
+                           @rok     INT, 
+                           @miesiac INT) 
+returns MONEY 
+AS 
+  BEGIN 
+      DECLARE @Sum MONEY = 0 
+
+      SET @Sum = (SELECT Sum(p.pensja) 
+                  FROM   kino k, 
+                         rezerwacja r, 
+                         seans s, 
+                         sala sa, 
+                         pracownik p 
+                  WHERE  r.id_seans = s.id_seans 
+                         AND s.id_sala = sa.id_sala 
+                         AND sa.id_kino = k.id_kino 
+                         AND p.id_kino = k.id_kino 
+                         AND Year(s.rozpoczecie) = @rok 
+                         AND Month(s.rozpoczecie) = @miesiac 
+                         AND k.id_kino = @idKino) 
+
+      RETURN @Sum 
+  END 
+
+go 
+
+/*
+--przyklad dzialania
+go
+SELECT id_kino, dbo.SumUpCosts(id_kino, 2018, 9) as Koszta FROM kino
+go
+*/
