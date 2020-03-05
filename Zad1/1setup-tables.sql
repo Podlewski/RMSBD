@@ -33,6 +33,17 @@ CREATE TABLE "pracownik"
      CONSTRAINT pracowniknazwiskoformat CHECK (nazwisko NOT LIKE '%[^A-Z]%') 
   ) 
 
+CREATE TABLE "byly_pracownik" 
+  ( 
+     "id_pracownik"    INTEGER NOT NULL PRIMARY KEY, 
+     "id_kino"         INTEGER, 
+     "imie"            VARCHAR(100), 
+     "nazwisko"        VARCHAR(100), 
+     "pensja"          MONEY, 
+     "data_zwolnienia" DATE, 
+     CONSTRAINT sys_fk_125 FOREIGN KEY("id_kino") REFERENCES "kino"("id_kino"), 
+  )
+
 CREATE TABLE "sala" 
   ( 
      "id_sala"     INTEGER NOT NULL PRIMARY KEY, 

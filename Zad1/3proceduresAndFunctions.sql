@@ -164,8 +164,7 @@ GO
 */
 
 --Wyzwalacz - dodaje rok do filmu, jeżeli nie miał go podanego
---drop trigger DodajRok
-CREATE TRIGGER dodajrok 
+CREATE OR ALTER TRIGGER dodajRok 
 ON film 
 INSTEAD OF INSERT 
 AS 
@@ -191,9 +190,33 @@ GO
 /*
 --przyklad dzialania
 INSERT INTO film VALUES (9, 'Kogel-mogel 4', NULL, 2, 'dramat') 
-SELECT * FROM   film 
+SELECT * FROM film 
 GO
 */
 
+--Wyzwalacz - przenosi usunietego pracownika do tabeli byłych pracowników
+CREATE OR ALTER TRIGGER usunPracownika 
+ON pracownik 
+AFTER DELETE 
+AS 
+  BEGIN 
+      INSERT INTO byly_pracownik 
+      SELECT id_pracownik, 
+             id_kino, 
+             imie,
+             nazwisko,
+             pensja,
+             GETDATE()      
+      FROM   deleted
+  END 
 
+GO
 
+/*
+--przyklad dzialania
+INSERT INTO pracownik VALUES (300, 3, 'Szymuś', 'Zwolniony', '1000')
+DELETE FROM pracownik WHERE id_pracownik = 300
+SELECT * from byly_pracownik
+DELETE FROM byly_pracownik WHERE id_pracownik = 300
+GO
+*/
