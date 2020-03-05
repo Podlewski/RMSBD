@@ -64,15 +64,15 @@ GO
 
 /*
 --niepoprawna wartosc
-EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', -3, '2018-09-01'
+EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', -3, '2018-09-01'
 GO
 
 --rezerwacja na zbyt duza liczbe osob
-EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', 300, '2018-09-01'
+EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 300, '2018-09-01'
 GO
 
 --poprawna rezerwacja
-EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
+EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 GO
 */
 
@@ -218,5 +218,32 @@ INSERT INTO pracownik VALUES (300, 3, 'Szymuś', 'Zwolniony', '1000')
 DELETE FROM pracownik WHERE id_pracownik = 300
 SELECT * from byly_pracownik
 DELETE FROM byly_pracownik WHERE id_pracownik = 300
+GO
+*/
+
+--Wyzwalacz - wypisuje informację o udanej rezerwacji
+CREATE OR ALTER TRIGGER udanaRezerwacja 
+ON rezerwacja 
+FOR INSERT 
+AS 
+  BEGIN 
+    DECLARE @liczba_osob INT, @imie VARCHAR(100), @nazwisko VARCHAR(100)
+
+    SET @liczba_osob = (SELECT liczba_osob FROM inserted)
+    SET @imie = (SELECT imie FROM inserted)
+    SET @nazwisko = (SELECT nazwisko  FROM inserted)
+
+    IF @liczba_osob = 1
+      PRINT 'Zarezerwowano miejsca dla 1 osoby na nazwisko: '+ @nazwisko + ' ' + @imie
+    ELSE
+      PRINT 'Zarezerwowano miejsca dla ' + CONVERT( VARCHAR(3), @liczba_osob) + ' osób na nazwisko: '+ @nazwisko + ' ' + @imie
+  END 
+
+GO
+
+/*
+--przyklad dzialania
+EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
+EXEC DodajRezerwacje 'Krzyś','Pisak', 'Miodowe Lata', 1, '2020-02-01'
 GO
 */
