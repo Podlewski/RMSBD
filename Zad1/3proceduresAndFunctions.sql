@@ -1,10 +1,10 @@
---2. Dodaj rezerwacje  
+--Procedura - dodaje rezerwacje  
 --nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
---drop procedure Dodaj_Rezerwacje 
+--drop procedure DodajRezerwacje 
 --GO 
 
 CREATE
-OR ALTER PROCEDURE Dodaj_rezerwacje(@imie     VARCHAR(100), 
+OR ALTER PROCEDURE DodajRezerwacje(@imie     VARCHAR(100), 
                                   @nazwisko VARCHAR(100), 
                                   @tytul    VARCHAR(100), 
                                   @liczba   INT, 
@@ -76,7 +76,7 @@ EXEC Dodaj_Rezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 GO
 */
 
---4. zwiekszanie pensji pracowników danego kina
+--Procedura - zwiększa pensję pracowników danego kina
 --drop procedure PodwyzkaProcentowaPracownik
 CREATE OR ALTER PROCEDURE PodwyzkaProcentowaPracownik (
 	@imie varchar(100),
@@ -107,7 +107,7 @@ BEGIN
 				end
 		END
 END
-go
+GO
 
 /*
 -- Przyklad poprawnego wykonania procedury
@@ -127,9 +127,9 @@ exec PodwyzkaProcentowaPracownik 'Adam','Skiba', 10
 GO
 */
 
---Funkcja oblicza koszty kina
---drop function SumUoCosts
-CREATE OR ALTER FUNCTION Sumupcosts(@idKino  INT, 
+--Funkcja - oblicza koszty kina
+--drop function ObliczKosztyKina
+CREATE OR ALTER FUNCTION ObliczKosztyKina(@idKino  INT, 
                            @rok     INT, 
                            @miesiac INT) 
 returns MONEY 
@@ -138,27 +138,62 @@ AS
       DECLARE @Sum MONEY = 0 
 
       SET @Sum = (SELECT Sum(p.pensja) 
-                  FROM   kino k, 
-                         rezerwacja r, 
-                         seans s, 
-                         sala sa, 
-                         pracownik p 
-                  WHERE  r.id_seans = s.id_seans 
-                         AND s.id_sala = sa.id_sala 
-                         AND sa.id_kino = k.id_kino 
-                         AND p.id_kino = k.id_kino 
-                         AND Year(s.rozpoczecie) = @rok 
-                         AND Month(s.rozpoczecie) = @miesiac 
-                         AND k.id_kino = @idKino) 
+        FROM kino k, 
+             rezerwacja r, 
+             seans s, 
+             sala sa, 
+             pracownik p 
+        WHERE r.id_seans = s.id_seans 
+          AND s.id_sala = sa.id_sala 
+          AND sa.id_kino = k.id_kino 
+          AND p.id_kino = k.id_kino 
+          AND Year(s.rozpoczecie) = @rok 
+          AND Month(s.rozpoczecie) = @miesiac 
+          AND k.id_kino = @idKino) 
 
       RETURN @Sum 
   END 
 
-go 
+GO
 
 /*
 --przyklad dzialania
-go
+GO
 SELECT id_kino, dbo.SumUpCosts(id_kino, 2018, 9) as Koszta FROM kino
-go
+GO
 */
+
+--Wyzwalacz - dodaje rok do filmu, jeżeli nie miał go podanego
+--drop trigger DodajRok
+CREATE TRIGGER dodajrok 
+ON film 
+INSTEAD OF INSERT 
+AS 
+  BEGIN 
+      DECLARE @rok INT 
+
+      IF (SELECT rok_powstania FROM inserted) IS NULL 
+        SET @rok = CONVERT(INT, Year(Getdate())) 
+      ELSE 
+        SET @rok = (SELECT rok_powstania FROM inserted) 
+
+      INSERT INTO film 
+      SELECT id_film, 
+             tytul, 
+             @rok, 
+             id_rezyser, 
+             gatunek 
+      FROM   inserted 
+  END 
+
+GO
+
+/*
+--przyklad dzialania
+INSERT INTO film VALUES (9, 'Kogel-mogel 4', NULL, 2, 'dramat') 
+SELECT * FROM   film 
+GO
+*/
+
+
+
