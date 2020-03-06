@@ -80,3 +80,59 @@ INSERT INTO rezerwacja VALUES
     (13, 8, 'Maciej', 'Szczepański', 1, 60.0),
     (14, 2, 'Czesław', 'Wróbel', 2, 50.0),
     (15, 1, 'Grażyna', 'Górska', 4, 70.0)
+
+--aktor
+INSERT INTO aktor VALUES
+    (1, 'Patryk', 'Lisik', '1995-10-11', 'PL'),
+    (2, 'Sylwia', 'Kaźmierczak', '1972-01-01', 'PL'),
+    (3, 'Dorota', 'Maciejewska', '1944-11-21', 'CA'),
+    (4, 'Jacek', 'Laskowski', '1966-10-14', 'ES'),
+    (5, 'Michał', 'Sobczak', '1956-09-15', 'PL'),
+    (6, 'Genowefa', 'Lis', '1995-10-24', 'PL'),
+    (7, 'Mirosław', 'Czerwiński', '1975-10-18', 'PL'),
+    (8, 'Agata', 'Gajewska', '1967-12-16', 'PL'),
+    (9, 'Zofia', 'Bąk', '1989-06-19', 'PL'),
+    (10, 'Marek', 'Adamczyk', '1974-07-20', 'PL'),
+    (11, 'Agata', 'Pawlak', '1931-08-27', 'PL'),
+    (12, 'Adam', 'Jankowski', '1976-11-25', 'PL'),
+    (13, 'Mieczysław', 'Adamczyk', '1999-12-22', 'ES'),
+    (14, 'Wanda', 'Czarnecka', '1977-11-20', 'PL'),
+    (15, 'Andrzej', 'Ziółkowski', '1989-04-19', 'PL'),
+    (16, 'Jarosław', 'Laskowski', '1943-06-17', 'PL'),
+    (17, 'Iwona', 'Urbańska', '1922-02-10', 'USA'),
+    (18, 'Aneta', 'Jakubowska', '1970-01-11', 'PL'),
+    (19, 'Zdzisław', 'Król', '1960-05-08', 'PL'),
+    (20, 'Maria', 'Wiśniewska', '1990-10-31', 'DE'),
+    (21, 'Grzegorz', 'Borkowski', '1991-11-07', 'FR'),
+    (22, 'Maria', 'Głowacka', '1988-12-05', 'PL'),
+    (23, 'Jakub', 'Pietrzak', '1970-11-01', 'PL'),
+    (24, 'Danuta', 'Piotrowska', '1956-07-10', 'PL'),
+    (25, 'Sebastian', 'Chmielewski', '1975-04-17', 'PL'),
+    (26, 'Adam', 'Andrzejewski', '1978-04-12', 'PL')
+
+--rola
+INSERT INTO rola VALUES
+    (1, 1, 1),
+    (2, 1, 2),
+    (3, 2, 3),
+    (4, 2, 4),
+    (5, 8, 5),
+    (6, 5, 7),
+    (7, 6, 7),
+    (8, 1, 7),
+    (9, 10, 8),
+    (10, 14, 8),
+    (11, 16, 4),
+    (12, 16, 4),
+    (13, 16, 2),
+    (14, 17, 2),
+    (15, 18, 1)
+
+--recenzja
+INSERT INTO recenzja VALUES
+    (1, 1, 8.0, 'filmweb.pl'),
+    (2, 1, 5.0, 'wp.pl'),
+    (3, 2, 7.0, 'filmweb.pl'),
+    (4, 2, 5.5, 'wp.pl'),
+    (5, 3, 6.8, 'interia.pl'),
+    (6, 3, 9.8, 'filmy.pl')
