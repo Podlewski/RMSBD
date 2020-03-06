@@ -70,6 +70,38 @@ CREATE TABLE "film"
      "gatunek"       VARCHAR(100) 
   ) 
 
+
+CREATE TABLE "recenzja"
+(
+  "id_recenzja" INTEGER NOT NULL PRIMARY KEY,
+  "id_film" INTEGER,
+  "ocena" decimal,
+  "autor" VARCHAR(50),
+  CONSTRAINT SYS_FK_130 FOREIGN KEY("id_film") REFERENCES "film"("id_film"),
+  CONSTRAINT ocenaLogika CHECK (ocena >= 0.0 and ocena <=10.0)
+)
+
+CREATE TABLE "aktor"
+(
+  "id_aktor" INTEGER NOT NULL PRIMARY KEY,
+  "imie" VARCHAR(100),
+  "nazwisko" VARCHAR(100),
+  "data_urodzenia" DATE,
+  "narodowosc" VARCHAR(100),
+  CONSTRAINT aktor_data_urodzenia CHECK (data_urodzenia > '1900/01/01'),
+  CONSTRAINT aktorImieFormat CHECK (imie not like '%[^A-Z]%'),
+  CONSTRAINT aktorNazwiskoFormat CHECK (nazwisko not like '%[^A-Z]%')
+)
+
+CREATE TABLE "rola"
+(
+  "id_rola" INTEGER NOT NULL PRIMARY KEY,
+  "id_aktor" INTEGER,
+  "id_film" INTEGER,
+  CONSTRAINT SYS_FK_112 FOREIGN KEY("id_film") REFERENCES "film"("id_film"),
+  CONSTRAINT SYS_FK_115 FOREIGN KEY("id_aktor") REFERENCES "aktor"("id_aktor")
+)
+
 CREATE TABLE "rezerwacja" 
   ( 
      "id_rezerwacja" INTEGER NOT NULL PRIMARY KEY, 
@@ -87,5 +119,8 @@ CREATE TABLE "rezerwacja"
 
 ALTER TABLE "seans" 
   ADD CONSTRAINT sys_fk_109 FOREIGN KEY("id_film") REFERENCES "film"("id_film") 
+
+ALTER TABLE "film"
+  ADD CONSTRAINT SYS_FK_127 FOREIGN KEY("id_rezyser") REFERENCES "rezyser"("id_rezyser")
 
 GO
