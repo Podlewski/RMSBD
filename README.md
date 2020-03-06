@@ -22,3 +22,14 @@ W ten sposób utworzyliśmy kontener z SQL Serverem gotowy do pracy. By z niego 
 + **Authentication type:** SQL Login
 + **User name:** SA
 + **Password:** Abc12345678
+
+---
+
+## Zadanie 1
+
+Należy opracować system bazodanowy przy następujących założeniach:
+
+1. Przynajmniej 5 powiązanych tabel.
+2. Procedury przechowywane (ang. stored procedures) i funkcje (ang. functions) pozwalające na dodawanie, zmianę oraz pobieranie danych z bazy (łącznie przynajmniej 5).
+3. Rozbudowanie procedur i funkcji o złożone konstrukcje programistyczne: instrukcje warunkowe, pętle, kursory, obsługę wyjątków.
+4. Wyzwalacze charakterystyczne dla aktywnych baz danych (przynajmniej 3 różne).
