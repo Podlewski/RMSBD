@@ -85,7 +85,7 @@ exec Dodaj_Film 'Nowy film', 1000, 'dramat', 'Stanley', 'Kubrick'
 GO
 */
 
---Procedura - dodaje rezerwacje  
+--2. Procedura - dodaje rezerwacje  
 --nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
 --drop procedure DodajRezerwacje 
 --GO 
@@ -163,7 +163,67 @@ EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 GO
 */
 
---Procedura - zwiększa pensję pracowników danego kina
+--3. nie mozna usunac rezysera z bazy jesli istnieje jego film 
+--drop procedure Usun_Rezysera 
+
+CREATE PROCEDURE Usun_rezysera (@imie     VARCHAR(100), 
+                                @nazwisko VARCHAR(100)) 
+AS 
+  BEGIN 
+      IF @imie IS NULL 
+          OR @nazwisko IS NULL 
+        BEGIN 
+            PRINT 'Nie podano imienia lub nazwiska rezysera!' 
+        END 
+      ELSE 
+        BEGIN 
+            DECLARE @id_rez INT 
+
+            SET @id_rez = (SELECT id_rezyser 
+                           FROM   rezyser 
+                           WHERE  nazwisko = @nazwisko 
+                                  AND imie = @imie) 
+
+            IF @id_rez IS NULL 
+              BEGIN 
+                  PRINT 'Nie ma takiego rezysera!' 
+              END 
+            ELSE 
+              BEGIN 
+                  IF NOT EXISTS (SELECT film.id_film 
+                                 FROM   film, 
+                                        rezyser 
+                                 WHERE  film.id_rezyser = @id_rez) 
+                    BEGIN 
+                        DELETE FROM rezyser 
+                        WHERE  id_rezyser = @id_rez 
+                    END 
+                  ELSE 
+                    BEGIN 
+                        PRINT 
+        'W bazie znajduja sie filmy podanego rezysera, nie mozna go usunac' 
+        END 
+              END 
+        END 
+  END 
+GO 
+
+/*
+--istnieja filma z takim rezyserem
+EXEC Usun_Rezysera 'Andrzej','Olszewski'
+GO
+
+--poprawne usuniecie
+INSERT INTO rezyser VALUES (5, 'Anna', 'Rolka', '1960/5/2', 'PL')
+EXEC Usun_Rezysera 'Anna', 'Rolka'
+GO
+
+--brak takiego rezysera
+EXEC Usun_Rezysera 'Pawel','Galewicz'
+GO
+*/
+
+--4. Procedura - zwiększa pensję pracowników danego kina
 --drop procedure PodwyzkaProcentowaPracownik
 CREATE OR ALTER PROCEDURE PodwyzkaProcentowaPracownik (
 	@imie varchar(100),
@@ -214,7 +274,7 @@ exec PodwyzkaProcentowaPracownik 'Adam','Skiba', 10
 GO
 */
 
---Funkcja - oblicza koszty kina
+--5. Funkcja - oblicza koszty kina
 --drop function ObliczKosztyKina
 CREATE OR ALTER FUNCTION ObliczKosztyKina(@idKino  INT, 
                            @rok     INT, 
