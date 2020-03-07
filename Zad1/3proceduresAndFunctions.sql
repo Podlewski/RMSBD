@@ -63,6 +63,27 @@ AS
 
 GO 
 
+/*
+-- Poprawne wywolanie procedury 
+SELECT * FROM film f, rezyser r where f.id_rezyser=r.id_rezyser and f.tytul='Nowy film'
+
+exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Stanley', 'Kubrick'
+GO
+
+SELECT * FROM film f, rezyser r where f.id_rezyser=r.id_rezyser and f.tytul='Nowy film'
+
+-- Próba wywolania na nieistniejacym rezyserze
+exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Michal', 'Kidawa'
+GO
+
+-- Próba wywolania na pustym nazwisku rezysera
+exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Michal', NULL
+GO
+
+--Proba wywolania na roku przed data urodzenia rezysera
+exec Dodaj_Film 'Nowy film', 1000, 'dramat', 'Stanley', 'Kubrick'
+GO
+*/
 
 --Procedura - dodaje rezerwacje  
 --nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
