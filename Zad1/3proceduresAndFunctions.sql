@@ -219,54 +219,39 @@ EXEC Usun_Rezysera 'Anna', 'Rolka'
 GO
 */
 
--- 4. Procedura - zwiększa pensję pracowników danego kina
+-- 4. Procedura - zwiększa pensję pracowników którzy zarabiają mniej od podanej kwoty do tej kwoty 
 
-CREATE OR ALTER PROCEDURE PodwyzkaProcentowaPracownik (
-	@imie varchar(100),
-	@nazwisko varchar(100),
-	@Procent float
-)
+CREATE OR ALTER PROCEDURE Podwyzka (@kwota int)
 AS
-BEGIN
-	IF @imie IS NULL OR @Procent IS NULL or @nazwisko is null
-		BEGIN
-			print 'Nie podano poprawnych wartosci'
-		END
-	ELSE
-		BEGIN
-			declare @id_prac int
-			set @id_prac = (select id_pracownik from pracownik where nazwisko=@nazwisko and imie = @imie)
-			print @id_prac
+  BEGIN
+    DECLARE Kursor CURSOR FOR SELECT id_pracownik, imie, nazwisko, pensja FROM pracownik
 
-			if @id_prac is null
-				begin
-					print 'Nie ma takiego pracownika!'
-				end
-			else
-				begin
-					UPDATE pracownik
-					SET pensja= pensja * (100.0 + @Procent) * 0.01
-					WHERE id_pracownik=@id_prac
-				end
-		END
-END
+    DECLARE @id INT, @imie VARCHAR(50), @nazwisko VARCHAR(50), @pensja INT
+
+    OPEN Kursor
+	  FETCH NEXT FROM Kursor INTO @id, @imie, @nazwisko, @pensja
+
+    WHILE @@FETCH_STATUS = 0
+      BEGIN
+      
+      IF (@kwota > @pensja)
+        BEGIN
+        PRINT 'Zwiekszam pensje pracownika ' + @nazwisko + ' ' + @imie
+        UPDATE pracownik SET pensja = @kwota WHERE id_pracownik = @id
+      END
+      
+      FETCH NEXT FROM Kursor INTO @id, @imie, @nazwisko, @pensja
+      
+      END
+
+    CLOSE Kursor
+    DEALLOCATE Kursor
+ END
 GO
 
 /*
 -- Przyklad poprawnego wykonania procedury
-SELECT * FROM pracownik WHERE imie='Michal' and nazwisko = 'Pawlak'
-
-exec PodwyzkaProcentowaPracownik 'Michal','Pawlak', 10
-GO
-
-SELECT * FROM pracownik WHERE imie='Michal' and nazwisko = 'Pawlak'
-
--- Przyklad niepoprawnego wywolania
-exec PodwyzkaProcentowaPracownik 'Michal','Pawlak', null
-GO
-
--- Przyklad niepoprawnego wywolania
-exec PodwyzkaProcentowaPracownik 'Adam','Skiba', 10
+EXEC Podwyzka 2100
 GO
 */
 
