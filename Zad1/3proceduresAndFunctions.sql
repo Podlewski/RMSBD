@@ -1,11 +1,11 @@
---1. Dodanie filmu dla okreslonego rezysera + aktor/ rezyser nie moga miec filmu z roku przed ich urodzeniem
---drop procedure Dodaj_Film 
+-- 1. Procedura - Dodanie filmu dla okreslonego rezysera
+-- aktor/reżyser nie moga miec filmu z roku przed ich urodzeniem
 
-CREATE PROCEDURE Dodaj_film (@tytul    VARCHAR(100), 
-                             @rok      INT, 
-                             @gatunek  VARCHAR(100), 
-                             @imie     VARCHAR(100), 
-                             @nazwisko VARCHAR(100)) 
+CREATE OR ALTER PROCEDURE DodajFilm(@tytul    VARCHAR(100), 
+                                    @rok      INT, 
+                                    @gatunek  VARCHAR(100), 
+                                    @imie     VARCHAR(100), 
+                                    @nazwisko VARCHAR(100)) 
 AS 
   BEGIN 
       IF @imie IS NULL 
@@ -80,22 +80,19 @@ GO
 exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Michal', NULL
 GO
 
---Proba wywolania na roku przed data urodzenia rezysera
+-- Proba wywolania na roku przed data urodzenia rezysera
 exec Dodaj_Film 'Nowy film', 1000, 'dramat', 'Stanley', 'Kubrick'
 GO
 */
 
---2. Procedura - dodaje rezerwacje  
---nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
---drop procedure DodajRezerwacje 
---GO 
+-- 2. Procedura - dodaje rezerwacje  
+-- nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
 
-CREATE
-OR ALTER PROCEDURE DodajRezerwacje(@imie     VARCHAR(100), 
-                                  @nazwisko VARCHAR(100), 
-                                  @tytul    VARCHAR(100), 
-                                  @liczba   INT, 
-                                  @data     DATE) 
+CREATE OR ALTER PROCEDURE DodajRezerwacje(@imie     VARCHAR(100), 
+                                          @nazwisko VARCHAR(100), 
+                                          @tytul    VARCHAR(100), 
+                                          @liczba   INT, 
+                                          @data     DATE) 
 AS 
   BEGIN 
       IF @imie IS NULL 
@@ -150,24 +147,23 @@ AS
 GO 
 
 /*
---niepoprawna wartosc
+-- niepoprawna wartosc
 EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', -3, '2018-09-01'
 GO
 
---rezerwacja na zbyt duza liczbe osob
+-- rezerwacja na zbyt duza liczbe osob
 EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 300, '2018-09-01'
 GO
 
---poprawna rezerwacja
+-- poprawna rezerwacja
 EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 GO
 */
 
---3. nie mozna usunac rezysera z bazy jesli istnieje jego film 
---drop procedure Usun_Rezysera 
+-- 3. Procedura - nie mozna usunac rezysera z bazy jesli istnieje jego film 
 
-CREATE PROCEDURE Usun_rezysera (@imie     VARCHAR(100), 
-                                @nazwisko VARCHAR(100)) 
+CREATE OR ALTER PROCEDURE UsunRezysera (@imie     VARCHAR(100), 
+                                        @nazwisko VARCHAR(100)) 
 AS 
   BEGIN 
       IF @imie IS NULL 
@@ -209,22 +205,22 @@ AS
 GO 
 
 /*
---istnieja filma z takim rezyserem
+-- istnieja filma z takim rezyserem
 EXEC Usun_Rezysera 'Andrzej','Olszewski'
 GO
 
---poprawne usuniecie
+-- brak takiego rezysera
+EXEC Usun_Rezysera 'Gaweł','Palewicz'
+GO
+
+-- poprawne usuniecie
 INSERT INTO rezyser VALUES (5, 'Anna', 'Rolka', '1960/5/2', 'PL')
 EXEC Usun_Rezysera 'Anna', 'Rolka'
 GO
-
---brak takiego rezysera
-EXEC Usun_Rezysera 'Pawel','Galewicz'
-GO
 */
 
---4. Procedura - zwiększa pensję pracowników danego kina
---drop procedure PodwyzkaProcentowaPracownik
+-- 4. Procedura - zwiększa pensję pracowników danego kina
+
 CREATE OR ALTER PROCEDURE PodwyzkaProcentowaPracownik (
 	@imie varchar(100),
 	@nazwisko varchar(100),
@@ -274,11 +270,11 @@ exec PodwyzkaProcentowaPracownik 'Adam','Skiba', 10
 GO
 */
 
---5. Funkcja - oblicza koszty kina
---drop function ObliczKosztyKina
+-- 5. Funkcja - oblicza koszty kina
+
 CREATE OR ALTER FUNCTION ObliczKosztyKina(@idKino  INT, 
-                           @rok     INT, 
-                           @miesiac INT) 
+                                          @rok     INT, 
+                                          @miesiac INT) 
 returns MONEY 
 AS 
   BEGIN 
@@ -304,14 +300,15 @@ AS
 GO
 
 /*
---przyklad dzialania
+-- przyklad dzialania
 GO
 SELECT id_kino, dbo.SumUpCosts(id_kino, 2018, 9) as Koszta FROM kino
 GO
 */
 
---Wyzwalacz - dodaje rok do filmu, jeżeli nie miał go podanego
-CREATE OR ALTER TRIGGER dodajRok 
+-- 6. Wyzwalacz - dodaje rok do filmu, jeżeli nie miał go podanego
+
+CREATE OR ALTER TRIGGER DodajRok 
 ON film 
 INSTEAD OF INSERT 
 AS 
@@ -335,14 +332,15 @@ AS
 GO
 
 /*
---przyklad dzialania
+-- przyklad dzialania
 INSERT INTO film VALUES (9, 'Kogel-mogel 4', NULL, 2, 'dramat') 
 SELECT * FROM film 
 GO
 */
 
---Wyzwalacz - przenosi usunietego pracownika do tabeli byłych pracowników
-CREATE OR ALTER TRIGGER usunPracownika 
+-- 7. Wyzwalacz - przenosi usunietego pracownika do tabeli byłych pracowników
+
+CREATE OR ALTER TRIGGER UsunPracownika 
 ON pracownik 
 AFTER DELETE 
 AS 
@@ -360,7 +358,7 @@ AS
 GO
 
 /*
---przyklad dzialania
+-- przyklad dzialania
 INSERT INTO pracownik VALUES (300, 3, 'Szymuś', 'Zwolniony', '1000')
 DELETE FROM pracownik WHERE id_pracownik = 300
 SELECT * from byly_pracownik
@@ -368,8 +366,9 @@ DELETE FROM byly_pracownik WHERE id_pracownik = 300
 GO
 */
 
---Wyzwalacz - wypisuje informację o udanej rezerwacji
-CREATE OR ALTER TRIGGER udanaRezerwacja 
+-- 8. Wyzwalacz - wypisuje informację o udanej rezerwacji
+
+CREATE OR ALTER TRIGGER UdanaRezerwacja 
 ON rezerwacja 
 FOR INSERT 
 AS 
@@ -389,7 +388,7 @@ AS
 GO
 
 /*
---przyklad dzialania
+-- przyklad dzialania
 EXEC DodajRezerwacje 'Piotr','Pawlak', 'Matrix', 50, '2018-09-01'
 EXEC DodajRezerwacje 'Krzyś','Pisak', 'Miodowe Lata', 1, '2020-02-01'
 GO
