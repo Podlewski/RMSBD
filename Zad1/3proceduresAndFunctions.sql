@@ -1,3 +1,69 @@
+--1. Dodanie filmu dla okreslonego rezysera + aktor/ rezyser nie moga miec filmu z roku przed ich urodzeniem
+--drop procedure Dodaj_Film 
+
+CREATE PROCEDURE Dodaj_film (@tytul    VARCHAR(100), 
+                             @rok      INT, 
+                             @gatunek  VARCHAR(100), 
+                             @imie     VARCHAR(100), 
+                             @nazwisko VARCHAR(100)) 
+AS 
+  BEGIN 
+      IF @imie IS NULL 
+          OR @nazwisko IS NULL 
+        BEGIN 
+            PRINT 'Nie podano imienia lub nazwiska rezysera!' 
+        END 
+      ELSE 
+        BEGIN 
+            DECLARE @id_rez INT 
+
+            SET @id_rez = (SELECT id_rezyser 
+                           FROM   rezyser 
+                           WHERE  nazwisko = @nazwisko 
+                                  AND imie = @imie) 
+
+            IF @id_rez IS NULL 
+              BEGIN 
+                  PRINT 'Nie ma takiego rezysera!' 
+              END 
+            ELSE 
+              BEGIN 
+                  DECLARE @uro DATE 
+
+                  SET @uro = (SELECT data_urodzenia 
+                              FROM   rezyser 
+                              WHERE  id_rezyser = @id_rez) 
+
+                  IF Year(@uro) > @rok 
+                    BEGIN 
+                        PRINT 'Rezyser sie jescze nie urodzil!' 
+                    END 
+                  ELSE 
+                    BEGIN 
+                        DECLARE @numer INT 
+
+                        SET @numer = 1 
+
+                        WHILE( @numer IN (SELECT id_film 
+                                          FROM   film) ) 
+                          BEGIN 
+                              SET @numer = @numer + 1; 
+                          END 
+
+                        INSERT INTO film 
+                        VALUES      (@numer, 
+                                     @tytul, 
+                                     @rok, 
+                                     @id_rez, 
+                                     @gatunek) 
+                    END 
+              END 
+        END 
+  END 
+
+GO 
+
+
 --Procedura - dodaje rezerwacje  
 --nie mozna wiecej zarezerwowac miejsc na seans niz pojemnosc sali 
 --drop procedure DodajRezerwacje 
