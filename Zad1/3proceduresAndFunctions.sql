@@ -1,5 +1,5 @@
 -- 1. Procedura - Dodanie filmu dla okreslonego rezysera
--- aktor/reżyser nie moga miec filmu z roku przed ich urodzeniem
+-- reżyser nie może mieć filmu z roku przed jego urodzeniem
 
 CREATE OR ALTER PROCEDURE DodajFilm(@tytul    VARCHAR(100), 
                                     @rok      INT, 
@@ -8,58 +8,39 @@ CREATE OR ALTER PROCEDURE DodajFilm(@tytul    VARCHAR(100),
                                     @nazwisko VARCHAR(100)) 
 AS 
   BEGIN 
-      IF @imie IS NULL 
-          OR @nazwisko IS NULL 
-        BEGIN 
-            PRINT 'Nie podano imienia lub nazwiska rezysera!' 
-        END 
-      ELSE 
-        BEGIN 
-            DECLARE @id_rez INT 
+    BEGIN TRY
+      DECLARE @id_rez INT, @urodziny DATE 
 
-            SET @id_rez = (SELECT id_rezyser 
-                           FROM   rezyser 
-                           WHERE  nazwisko = @nazwisko 
-                                  AND imie = @imie) 
+      SET @id_rez = (SELECT id_rezyser 
+                     FROM   rezyser 
+                     WHERE  nazwisko = @nazwisko 
+                            AND imie = @imie) 
 
-            IF @id_rez IS NULL 
-              BEGIN 
-                  PRINT 'Nie ma takiego rezysera!' 
-              END 
-            ELSE 
-              BEGIN 
-                  DECLARE @uro DATE 
+      IF @id_rez IS NULL
+      BEGIN
+        RAISERROR('Nie ma takiego reżysera', 16, 1);
+      END
 
-                  SET @uro = (SELECT data_urodzenia 
-                              FROM   rezyser 
-                              WHERE  id_rezyser = @id_rez) 
+      SET @urodziny = (SELECT data_urodzenia 
+                       FROM   rezyser 
+                       WHERE  id_rezyser = @id_rez) 
 
-                  IF Year(@uro) > @rok 
-                    BEGIN 
-                        PRINT 'Rezyser sie jescze nie urodzil!' 
-                    END 
-                  ELSE 
-                    BEGIN 
-                        DECLARE @numer INT 
+      IF Year(@urodziny) > @rok 
+      BEGIN
+        RAISERROR('Reżyser się jeszcze nie urodził', 16, 1);
+      END
 
-                        SET @numer = 1 
-
-                        WHILE( @numer IN (SELECT id_film 
-                                          FROM   film) ) 
-                          BEGIN 
-                              SET @numer = @numer + 1; 
-                          END 
-
-                        INSERT INTO film 
-                        VALUES      (@numer, 
-                                     @tytul, 
-                                     @rok, 
-                                     @id_rez, 
-                                     @gatunek) 
-                    END 
-              END 
-        END 
-  END 
+      INSERT INTO film 
+      VALUES      (@tytul, 
+                   @rok, 
+                   @id_rez, 
+                   @gatunek) 
+    END TRY
+    
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+    END CATCH
+  END
 
 GO 
 
@@ -67,21 +48,17 @@ GO
 -- Poprawne wywolanie procedury 
 SELECT * FROM film f, rezyser r where f.id_rezyser=r.id_rezyser and f.tytul='Nowy film'
 
-exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Stanley', 'Kubrick'
+EXEC DodajFilm 'Nowy film', 2000, 'dramat', 'Stanley', 'Kubrick'
 GO
 
 SELECT * FROM film f, rezyser r where f.id_rezyser=r.id_rezyser and f.tytul='Nowy film'
 
 -- Próba wywolania na nieistniejacym rezyserze
-exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Michal', 'Kidawa'
-GO
-
--- Próba wywolania na pustym nazwisku rezysera
-exec Dodaj_Film 'Nowy film', 2000, 'dramat', 'Michal', NULL
+EXEC DodajFilm 'Nowy film', 2000, 'dramat', 'Michal', 'Kidawa'
 GO
 
 -- Proba wywolania na roku przed data urodzenia rezysera
-exec Dodaj_Film 'Nowy film', 1000, 'dramat', 'Stanley', 'Kubrick'
+EXEC DodajFilm 'Nowy film', 1000, 'dramat', 'Stanley', 'Kubrick'
 GO
 */
 
@@ -95,53 +72,44 @@ CREATE OR ALTER PROCEDURE DodajRezerwacje(@imie     VARCHAR(100),
                                           @data     DATE) 
 AS 
   BEGIN 
+    BEGIN TRY
+      DECLARE @id_seansu INT, @numer INT 
+
       IF @imie IS NULL 
-          OR @nazwisko IS NULL 
-          OR @tytul IS NULL 
-          OR @liczba < 0 
-        BEGIN 
-            PRINT 'Zbyt malo danych lub podano ujemna ilosc osob' 
-        END 
-      ELSE 
-        BEGIN 
-            DECLARE @id_seansu INT 
+        OR @nazwisko IS NULL 
+        OR @tytul IS NULL 
+        OR @liczba < 0 
+          RAISERROR('Niepoprawne dane', 16, 1)
 
-            SET @id_seansu = (SELECT TOP 1 id_seans 
-                              FROM   seans s, 
-                                     film f 
-                              WHERE  @tytul = f.tytul 
-                                     AND s.id_film = f.id_film 
-                                     AND CONVERT(DATE, s.rozpoczecie) = @data) 
+      SET @id_seansu = (SELECT TOP 1 id_seans 
+                        FROM  seans s, 
+                              film f 
+                        WHERE @tytul = f.tytul 
+                              AND s.id_film = f.id_film 
+                              AND CONVERT(DATE, s.rozpoczecie) = @data) 
 
-            IF @liczba > (SELECT sa.liczba_osob 
-                          FROM   seans s, 
-                                 sala sa 
-                          WHERE  s.id_sala = sa.id_sala 
-                                 AND @id_seansu = s.id_seans) 
-              BEGIN 
-                  PRINT 'Podano zbyt duza ilosc osob na sale' 
-              END 
-            ELSE 
-              BEGIN 
-                  DECLARE @numer INT 
+      IF @id_seansu IS NULL
+        RAISERROR('Nie ma takiego seansu', 16, 1) 
 
-                  SET @numer = 1 
+      IF @liczba > (SELECT sa.liczba_osob 
+                    FROM   seans s, 
+                           sala sa 
+                    WHERE  s.id_sala = sa.id_sala 
+                           AND @id_seansu = s.id_seans) 
+        RAISERROR('Sala nie zmieści tylu osób', 16, 1)
 
-                  WHILE( @numer IN (SELECT id_rezerwacja 
-                                    FROM   rezerwacja) ) 
-                    BEGIN 
-                        SET @numer = @numer + 1; 
-                    END 
+      INSERT INTO rezerwacja 
+      VALUES      (@id_seansu, 
+                   @imie, 
+                   @nazwisko, 
+                   @liczba, 
+                   NULL)  
 
-                  INSERT INTO rezerwacja 
-                  VALUES      (@numer, 
-                               @id_seansu, 
-                               @imie, 
-                               @nazwisko, 
-                               @liczba, 
-                               30) 
-              END 
-        END 
+    END TRY
+    
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+    END CATCH
   END 
 
 GO 
@@ -165,57 +133,52 @@ GO
 CREATE OR ALTER PROCEDURE UsunRezysera (@imie     VARCHAR(100), 
                                         @nazwisko VARCHAR(100)) 
 AS 
-  BEGIN 
-      IF @imie IS NULL 
-          OR @nazwisko IS NULL 
+  BEGIN
+    BEGIN TRY
+      DECLARE @id_rez INT 
+
+      SET @id_rez = (SELECT id_rezyser 
+                     FROM  rezyser 
+                     WHERE nazwisko = @nazwisko 
+                           AND imie = @imie) 
+
+      IF @id_rez IS NULL
+      BEGIN
+        RAISERROR('Nie ma takiego rezysera', 16, 1);
+      END
+
+      IF NOT EXISTS (SELECT film.id_film 
+                     FROM   film, rezyser 
+                     WHERE  film.id_rezyser = @id_rez) 
         BEGIN 
-            PRINT 'Nie podano imienia lub nazwiska rezysera!' 
+          DELETE FROM rezyser 
+          WHERE  id_rezyser = @id_rez
+          PRINT 'Usunieto rezysera ' + @nazwisko + ' ' + @imie
         END 
       ELSE 
         BEGIN 
-            DECLARE @id_rez INT 
-
-            SET @id_rez = (SELECT id_rezyser 
-                           FROM   rezyser 
-                           WHERE  nazwisko = @nazwisko 
-                                  AND imie = @imie) 
-
-            IF @id_rez IS NULL 
-              BEGIN 
-                  PRINT 'Nie ma takiego rezysera!' 
-              END 
-            ELSE 
-              BEGIN 
-                  IF NOT EXISTS (SELECT film.id_film 
-                                 FROM   film, 
-                                        rezyser 
-                                 WHERE  film.id_rezyser = @id_rez) 
-                    BEGIN 
-                        DELETE FROM rezyser 
-                        WHERE  id_rezyser = @id_rez 
-                    END 
-                  ELSE 
-                    BEGIN 
-                        PRINT 
-        'W bazie znajduja sie filmy podanego rezysera, nie mozna go usunac' 
+          RAISERROR('W bazie znajdują się filmy podanego reżysera, nie można go usunąć', 16, 1); 
         END 
-              END 
-        END 
-  END 
+    END TRY
+
+    BEGIN CATCH
+        PRINT ERROR_MESSAGE()
+    END CATCH
+  END
 GO 
 
 /*
--- istnieja filma z takim rezyserem
-EXEC Usun_Rezysera 'Andrzej','Olszewski'
+-- istnieja filmy z takim rezyserem
+EXEC UsunRezysera 'Andrzej','Olszewski'
 GO
 
 -- brak takiego rezysera
-EXEC Usun_Rezysera 'Gaweł','Palewicz'
+EXEC UsunRezysera 'Gaweł','Palewicz'
 GO
 
 -- poprawne usuniecie
-INSERT INTO rezyser VALUES (5, 'Anna', 'Rolka', '1960/5/2', 'PL')
-EXEC Usun_Rezysera 'Anna', 'Rolka'
+INSERT INTO rezyser VALUES ('Anna', 'Rolka', '1960/5/2', 'PL')
+EXEC UsunRezysera 'Anna', 'Rolka'
 GO
 */
 
@@ -266,18 +229,18 @@ AS
       DECLARE @Sum MONEY = 0 
 
       SET @Sum = (SELECT Sum(p.pensja) 
-        FROM kino k, 
-             rezerwacja r, 
-             seans s, 
-             sala sa, 
-             pracownik p 
-        WHERE r.id_seans = s.id_seans 
-          AND s.id_sala = sa.id_sala 
-          AND sa.id_kino = k.id_kino 
-          AND p.id_kino = k.id_kino 
-          AND Year(s.rozpoczecie) = @rok 
-          AND Month(s.rozpoczecie) = @miesiac 
-          AND k.id_kino = @idKino) 
+                  FROM kino k, 
+                      rezerwacja r, 
+                      seans s, 
+                      sala sa, 
+                      pracownik p 
+                  WHERE r.id_seans = s.id_seans 
+                    AND s.id_sala = sa.id_sala 
+                    AND sa.id_kino = k.id_kino 
+                    AND p.id_kino = k.id_kino 
+                    AND Year(s.rozpoczecie) = @rok 
+                    AND Month(s.rozpoczecie) = @miesiac 
+                    AND k.id_kino = @idKino) 
 
       RETURN @Sum 
   END 
@@ -286,31 +249,32 @@ GO
 
 /*
 -- przyklad dzialania
-GO
-SELECT id_kino, dbo.SumUpCosts(id_kino, 2018, 9) as Koszta FROM kino
+SELECT id_kino AS 'ID Kina', dbo.ObliczKosztyKina(id_kino, 2018, 9) as Koszta FROM kino
 GO
 */
 
--- 6. Wyzwalacz - dodaje rok do filmu, jeżeli nie miał go podanego
+-- 6. Wyzwalacz - dodaje cenę rezerwacji, jeżeli nie została podana
 
-CREATE OR ALTER TRIGGER DodajRok 
-ON film 
+CREATE OR ALTER TRIGGER DodajCene 
+ON rezerwacja 
 INSTEAD OF INSERT 
 AS 
   BEGIN 
-      DECLARE @rok INT 
+      DECLARE @cena INT
 
-      IF (SELECT rok_powstania FROM inserted) IS NULL 
-        SET @rok = CONVERT(INT, Year(Getdate())) 
-      ELSE 
-        SET @rok = (SELECT rok_powstania FROM inserted) 
+      IF (SELECT cena FROM inserted) IS NULL
+      BEGIN 
+        SET @cena = (SELECT liczba_osob FROM inserted) * 20.0
+      END
+      ELSE
+        SET @cena = (SELECT cena FROM inserted)
 
-      INSERT INTO film 
-      SELECT id_film, 
-             tytul, 
-             @rok, 
-             id_rezyser, 
-             gatunek 
+      INSERT INTO rezerwacja 
+      SELECT id_seans, 
+             imie, 
+             nazwisko, 
+             liczba_osob,
+             CONVERT(MONEY, @cena) 
       FROM   inserted 
   END 
 
@@ -318,8 +282,8 @@ GO
 
 /*
 -- przyklad dzialania
-INSERT INTO film VALUES (9, 'Kogel-mogel 4', NULL, 2, 'dramat') 
-SELECT * FROM film 
+INSERT INTO rezerwacja VALUES (1, 'Zbysio', 'Enowski', 3, NULL)
+SELECT * FROM rezerwacje WHERE nazwisko = 'Enowski'
 GO
 */
 
@@ -344,10 +308,10 @@ GO
 
 /*
 -- przyklad dzialania
-INSERT INTO pracownik VALUES (300, 3, 'Szymuś', 'Zwolniony', '1000')
-DELETE FROM pracownik WHERE id_pracownik = 300
+INSERT INTO pracownik VALUES (3, 'Szymuś', 'Zwolniony', '1000')
+DELETE FROM pracownik WHERE nazwisko = 'Zwolniony'
 SELECT * from byly_pracownik
-DELETE FROM byly_pracownik WHERE id_pracownik = 300
+DELETE FROM byly_pracownik WHERE nazwisko = 'Zwolniony'
 GO
 */
 
