@@ -1,5 +1,3 @@
-USE master 
-
 IF EXISTS(SELECT 1 
           FROM   master.dbo.sysdatabases 
           WHERE  NAME = 'kino') 
@@ -16,14 +14,14 @@ GO
 --create tables-- 
 CREATE TABLE "kino" 
 ( 
-    "id_kino"    INTEGER NOT NULL PRIMARY KEY, 
+    "id_kino"    INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "id_manager" INTEGER, 
     "miasto"     VARCHAR(100) 
 ) 
 
 CREATE TABLE "pracownik" 
 ( 
-    "id_pracownik" INTEGER NOT NULL PRIMARY KEY, 
+    "id_pracownik" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "id_kino"      INTEGER, 
     "imie"         VARCHAR(100), 
     "nazwisko"     VARCHAR(100), 
@@ -46,7 +44,7 @@ CREATE TABLE "byly_pracownik"
 
 CREATE TABLE "sala" 
 ( 
-    "id_sala"     INTEGER NOT NULL PRIMARY KEY, 
+    "id_sala"     INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "id_kino"     INTEGER, 
     "liczba_osob" INTEGER, 
     CONSTRAINT sys_fk_121 FOREIGN KEY("id_kino") REFERENCES "kino"("id_kino") 
@@ -54,7 +52,7 @@ CREATE TABLE "sala"
 
 CREATE TABLE "seans" 
 ( 
-    "id_seans"    INTEGER NOT NULL PRIMARY KEY, 
+    "id_seans"    INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "id_film"     INTEGER, 
     "id_sala"     INTEGER, 
     "rozpoczecie" DATETIME, 
@@ -63,7 +61,7 @@ CREATE TABLE "seans"
 
 CREATE TABLE "film" 
 ( 
-    "id_film"       INTEGER NOT NULL PRIMARY KEY, 
+    "id_film"       INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "tytul"         VARCHAR(100), 
     "rok_powstania" INTEGER, 
     "id_rezyser"    INTEGER, 
@@ -72,7 +70,7 @@ CREATE TABLE "film"
 
 CREATE TABLE "rezyser" 
 ( 
-    "id_rezyser"     INTEGER NOT NULL PRIMARY KEY, 
+    "id_rezyser"     INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "imie"           VARCHAR(100), 
     "nazwisko"       VARCHAR(100), 
     "data_urodzenia" DATE, 
@@ -84,7 +82,7 @@ CREATE TABLE "rezyser"
 
 CREATE TABLE "recenzja"
 (
-  "id_recenzja" INTEGER NOT NULL PRIMARY KEY,
+  "id_recenzja" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
   "id_film" INTEGER,
   "ocena" decimal,
   "autor" VARCHAR(50),
@@ -94,7 +92,7 @@ CREATE TABLE "recenzja"
 
 CREATE TABLE "aktor"
 (
-  "id_aktor" INTEGER NOT NULL PRIMARY KEY,
+  "id_aktor" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
   "imie" VARCHAR(100),
   "nazwisko" VARCHAR(100),
   "data_urodzenia" DATE,
@@ -106,7 +104,7 @@ CREATE TABLE "aktor"
 
 CREATE TABLE "rola"
 (
-  "id_rola" INTEGER NOT NULL PRIMARY KEY,
+  "id_rola" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
   "id_aktor" INTEGER,
   "id_film" INTEGER,
   CONSTRAINT SYS_FK_112 FOREIGN KEY("id_film") REFERENCES "film"("id_film"),
@@ -115,7 +113,7 @@ CREATE TABLE "rola"
 
 CREATE TABLE "rezerwacja" 
 ( 
-    "id_rezerwacja" INTEGER NOT NULL PRIMARY KEY, 
+    "id_rezerwacja" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     "id_seans"      INTEGER, 
     "imie"          VARCHAR(100), 
     "nazwisko"      VARCHAR(100), 
