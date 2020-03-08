@@ -20,6 +20,13 @@ INSERT INTO pracownik VALUES
     (8, 4, 'Daniel', 'Mucha', 8000.0),
     (9, 3, 'Monika', 'Golec', 2000.0)
 
+--rezyser
+INSERT INTO rezyser VALUES
+    (1, 'Stanley', 'Kubrick', '1928/07/26', 'USA'),
+    (2, 'Janusz', 'Burczewski', '1964/3/12', 'USA'),
+    (3, 'Adams', 'Stevens', '1988/7/14', 'PL'),
+    (4, 'Andrzej', 'Olszewski', '1990/2/2', 'PL')
+
 --film
 INSERT INTO film VALUES
     (1, 'Matrix', 1997, 1, 'sci-fi'),
