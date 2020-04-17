@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE "aktor"
 (
-    "id_aktor" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
+    "id_aktor" INTEGER NOT NULL PRIMARY KEY,
     "imie" VARCHAR(100),
     "nazwisko" VARCHAR(100),
     "data_urodzenia" DATE,
@@ -22,7 +22,7 @@ CREATE TABLE "aktor"
 
 CREATE TABLE "film"
 (
-    "id_film" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
+    "id_film" INTEGER NOT NULL PRIMARY KEY,
     "tytul" VARCHAR(100),
     "rok_powstania" INTEGER,
     "gatunek" VARCHAR(100)
@@ -31,7 +31,7 @@ CREATE TABLE "film"
 
 CREATE TABLE "rola"
 (
-    "id_rola" INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
+    "id_rola" INTEGER NOT NULL PRIMARY KEY,
     "id_aktor" INTEGER,
     "id_film" INTEGER,
     CONSTRAINT SYS_FK_112 FOREIGN KEY("id_film") REFERENCES "film"("id_film"),
