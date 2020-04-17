@@ -4,6 +4,7 @@ services:
     image: mcr.microsoft.com/mssql/server
     container_name: rmsbd.db
     environment:
+      # User: SA
       SA_PASSWORD: "Abc12345678"
       ACCEPT_EULA: "Y"
     volumes:
