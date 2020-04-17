@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Filmy>
+  <Film>
+    <id_film>1</id_film>
+    <tytul>Matrix</tytul>
+    <rok_powstania>1997</rok_powstania>
+    <gatunek>sci-fi</gatunek>
+  </Film>
+  <Film>
+    <id_film>2</id_film>
+    <tytul>Historia Polski</tytul>
+    <rok_powstania>2000</rok_powstania>
+    <gatunek>dramat</gatunek>
+  </Film>
+  <Film>
+    <id_film>3</id_film>
+    <tytul>Zycie studenta</tytul>
+    <rok_powstania>2011</rok_powstania>
+    <gatunek>dramat</gatunek>
+  </Film>
+  <Film>
+    <id_film>4</id_film>
+    <tytul>Miodowe Lata</tytul>
+    <rok_powstania>2018</rok_powstania>
+    <gatunek>komedia</gatunek>
+  </Film>
+</Filmy>
