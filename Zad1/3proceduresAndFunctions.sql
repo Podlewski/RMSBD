@@ -1,3 +1,6 @@
+USE kino
+GO
+
 -- 1. Procedura - Dodanie filmu dla okreslonego rezysera
 -- reżyser nie może mieć filmu z roku przed jego urodzeniem
 
