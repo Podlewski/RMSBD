@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<rpg>
+
+<!-- Pierwsza sekcja -->
+
+	<!-- Wydawca systemu -->
+	<wydawcy>
+		<wydawca wydawca_id="wyd01">Black Monk</wydawca>
+		<wydawca wydawca_id="wyd02">Copernicus Corporation</wydawca>
+		<wydawca wydawca_id="wyd03">Fajne RPG</wydawca>
+		<wydawca wydawca_id="wyd04">ISA</wydawca>
+		<wydawca wydawca_id="wyd05">Kuźnia Gier</wydawca>
+		<wydawca wydawca_id="wyd06">Rebel</wydawca>
+	</wydawcy>
+
+	<!-- Baza gatunków -->
+    <gatunki>
+        <gatunek gatunek_id="gat01">Akcja</gatunek>
+        <gatunek gatunek_id="gat02">Dark Fantasy</gatunek>
+        <gatunek gatunek_id="gat03">Detektywistyczna</gatunek>
+        <gatunek gatunek_id="gat04">Fantasy</gatunek>
+        <gatunek gatunek_id="gat05">Horror</gatunek>
+        <gatunek gatunek_id="gat06">Mitologia</gatunek>
+        <gatunek gatunek_id="gat07">Science Fiction</gatunek>
+        <gatunek gatunek_id="gat08">Steampunk</gatunek>
+    </gatunki>
+	
+	<!-- Typy podręcznika -->
+	<typy>
+		<typ typ_id="typ01">Podstawka</typ>
+		<typ typ_id="typ02">Bestiariusz</typ>
+		<typ typ_id="typ03">Kampania</typ>
+		<typ typ_id="typ04">Przygoda</typ>
+		<typ typ_id="typ05">Rozszerzenie</typ>
+	</typy>
+
+<!-- Druga sekcja -->
+	
+	<kolekcja>
+	
+		<system gatunek_id="gat07" wydawca_id="wyd02">
+			
+			<nazwa>Dark Heresy - 2 Edycja</nazwa>
+			<kości>
+				<kość liczba_kości="wiele">K10</kość>
+				<kość liczba_kości="jedna">K100</kość>
+			</kości>
+			
+			<podręczniki>
+				<podręcznik typ_id="typ01">
+					<tytuł>Dark Heresy 2 RPG - Podręcznik Podstawowy</tytuł>
+					<tytuł_oryginalny>Dark Heresy RPG Second Edition Core Rulebook</tytuł_oryginalny>
+					<data_wydania>4.9.2014</data_wydania>
+					<liczba_stron>448</liczba_stron>
+					<ocena_podręcznika>7.4</ocena_podręcznika>					
+					<cena_podręcznika>145.99</cena_podręcznika>					
+				</podręcznik>
+
+				<podręcznik typ_id="typ03">
+					<tytuł>Zapomniani bogowie</tytuł>
+					<tytuł_oryginalny>Forgotten Gods</tytuł_oryginalny>
+					<data_wydania>28.1.2015</data_wydania>
+					<liczba_stron>141</liczba_stron>	
+					<ocena_podręcznika>5.9</ocena_podręcznika>		
+					<cena_podręcznika>78.50</cena_podręcznika>							
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Wróg Wewnętrzny</tytuł>
+					<tytuł_oryginalny>Enemies Within</tytuł_oryginalny>
+					<data_wydania>29.4.2015</data_wydania>
+					<liczba_stron>144</liczba_stron>
+					<ocena_podręcznika>8.1</ocena_podręcznika>
+					<cena_podręcznika>45.89</cena_podręcznika>					
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Wróg Zewnętrzny</tytuł>
+					<tytuł_oryginalny>Enemies Without</tytuł_oryginalny>
+					<data_wydania>30.10.2015</data_wydania>
+					<liczba_stron>144</liczba_stron>	
+					<ocena_podręcznika>7.5</ocena_podręcznika>	
+					<cena_podręcznika>46.99</cena_podręcznika>										
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Wróg Spoza Rzeczywistości</tytuł>
+					<tytuł_oryginalny>Enemies Beyond</tytuł_oryginalny>
+					<data_wydania>1.2.2016</data_wydania>
+					<liczba_stron>144</liczba_stron>	
+					<ocena_podręcznika>8.1</ocena_podręcznika>
+					<cena_podręcznika>50.00</cena_podręcznika>										
+				</podręcznik>
+			</podręczniki>
+
+			<popularność>14</popularność>
+			<format>A4</format>
+
+		</system>
+
+		
+		<system gatunek_id="gat04" wydawca_id="wyd02">
+
+			<nazwa>Warhammer Fantasy Roleplay - 2 Edycja</nazwa>
+			<kości>
+				<kość liczba_kości="wiele">K10</kość>
+				<kość liczba_kości="jedna">K100</kość>
+			</kości>			
+		
+			<podręczniki>
+				<podręcznik typ_id="typ01">
+					<tytuł>Warhammer 2 ed. RPG - Podręcznik Główny</tytuł>
+					<tytuł_oryginalny>Warhammer Fantasy Roleplay Rulebook</tytuł_oryginalny>
+					<data_wydania>29.3.2005</data_wydania>
+					<liczba_stron>265</liczba_stron>	
+					<ocena_podręcznika>9.0</ocena_podręcznika>		
+					<cena_podręcznika>234.79</cena_podręcznika>					
+				</podręcznik>	
+
+				<podręcznik typ_id="typ02">
+					<tytuł>Bestiariusz Starego Świata</tytuł>
+					<tytuł_oryginalny>Old World Bestiary</tytuł_oryginalny>
+					<data_wydania>17.5.2005</data_wydania>
+					<liczba_stron>120</liczba_stron>	
+					<ocena_podręcznika>7.2</ocena_podręcznika>	
+					<cena_podręcznika>178.29</cena_podręcznika>					
+				</podręcznik>
+
+				<podręcznik typ_id="typ03">
+					<tytuł>Ścieżki Przeklętych: Popioły Middenheim</tytuł>
+					<tytuł_oryginalny>Paths of the Damned: Ashes of Middenheim</tytuł_oryginalny>
+					<data_wydania>31.5.2005</data_wydania>
+					<liczba_stron>94</liczba_stron>
+					<ocena_podręcznika>8.3</ocena_podręcznika>
+					<cena_podręcznika>120.40</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Dziedzictwo Sigmara</tytuł>
+					<tytuł_oryginalny>Sigmar's Heirs</tytuł_oryginalny>
+					<data_wydania>9.8.2005</data_wydania>
+					<liczba_stron>127</liczba_stron>
+					<ocena_podręcznika>7.9</ocena_podręcznika>	
+					<cena_podręcznika>115.55</cena_podręcznika>					
+				</podręcznik>
+
+				<podręcznik typ_id="typ03">
+					<tytuł>Ścieżki Przeklętych: Wieże Altdorfu</tytuł>
+					<tytuł_oryginalny>Paths of the Damned: Spires of Altdorf</tytuł_oryginalny>
+					<data_wydania>13.9.2005</data_wydania>
+					<liczba_stron>94</liczba_stron>			
+					<ocena_podręcznika>5.8</ocena_podręcznika>		
+					<cena_podręcznika>99.99</cena_podręcznika>					
+				</podręcznik>
+				
+				<podręcznik typ_id="typ03">
+					<tytuł>Ścieżki przeklętych: Kuźnie Nuln</tytuł>
+					<tytuł_oryginalny>Paths of the Damned: Forges of Nuln</tytuł_oryginalny>
+					<data_wydania>31.1.2006</data_wydania>
+					<liczba_stron>96</liczba_stron>	
+					<ocena_podręcznika>6.2</ocena_podręcznika>
+					<cena_podręcznika>169.69</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Dzieci Rogatego Szczura</tytuł>
+					<tytuł_oryginalny>Children of the Horned Rat </tytuł_oryginalny>
+					<data_wydania>23.5.2005</data_wydania>
+					<liczba_stron>128</liczba_stron>	
+					<ocena_podręcznika>6.5</ocena_podręcznika>	
+					<cena_podręcznika>150.35</cena_podręcznika>					
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Księga Spaczenia</tytuł>
+					<tytuł_oryginalny>Tome of Corruption</tytuł_oryginalny>
+					<data_wydania>10.10.2006</data_wydania>
+					<liczba_stron>256</liczba_stron>	
+					<ocena_podręcznika>8.7</ocena_podręcznika>
+					<cena_podręcznika>110.00</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Mroczni Władcy Nocy</tytuł>
+					<tytuł_oryginalny>Night's Dark Masters</tytuł_oryginalny>
+					<data_wydania>1.6.2007</data_wydania>
+					<liczba_stron>144</liczba_stron>	
+					<ocena_podręcznika>9.0</ocena_podręcznika>
+					<cena_podręcznika>112.00</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Księga Zbawienia</tytuł>
+					<tytuł_oryginalny>Tome of Salvation</tytuł_oryginalny>
+					<data_wydania>15.7.2008</data_wydania>
+					<liczba_stron>264</liczba_stron>	
+					<ocena_podręcznika>8.6</ocena_podręcznika>
+					<cena_podręcznika>113.15</cena_podręcznika>
+				</podręcznik>			
+			</podręczniki>
+
+			<popularność>29</popularność>
+			<format>A4</format>
+
+		</system>
+		
+		<system gatunek_id="gat08" wydawca_id="wyd05">
+			
+			<nazwa>Wolsung: Magia Wieku Pary</nazwa>
+			<kości>
+				<kość liczba_kości="wiele">K10</kość>
+			</kości>
+			
+			<podręczniki>
+				<podręcznik typ_id="typ01">
+					<tytuł>Wolsung: Magia Wieku Pary</tytuł>
+					<data_wydania>30.9.2009</data_wydania>
+					<liczba_stron>480</liczba_stron>	
+					<ocena_podręcznika>6.1</ocena_podręcznika>
+					<cena_podręcznika>156.99</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ03">
+					<tytuł>Lyonesse: Miasto, Mgła, Maszyna</tytuł>
+					<data_wydania>25.7.2010</data_wydania>
+					<liczba_stron>128</liczba_stron>	
+					<ocena_podręcznika>6.7</ocena_podręcznika>
+					<cena_podręcznika>85.95</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Almanach Nadzwyczajny</tytuł>
+					<data_wydania>25.3.2011</data_wydania>
+					<liczba_stron>96</liczba_stron>		
+					<ocena_podręcznika>6.6</ocena_podręcznika>
+					<cena_podręcznika>44.00</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ05">
+					<tytuł>Slawia: Rzeczpospolita Przeklęta</tytuł>
+					<data_wydania>22.3.2013</data_wydania>
+					<liczba_stron>129</liczba_stron>	
+					<ocena_podręcznika>4.8</ocena_podręcznika>
+					<cena_podręcznika>66.75</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ01">
+					<tytuł>Wolsung: Magia Wieku Pary - edycja 1.5</tytuł>
+					<data_wydania>31.8.2013</data_wydania>
+					<liczba_stron>473</liczba_stron>
+					<ocena_podręcznika>8.9</ocena_podręcznika>
+					<cena_podręcznika>188.19</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ04">
+					<tytuł>Dzień, w którym zatonęła Urda</tytuł>
+					<data_wydania>19.4.2016</data_wydania>
+					<liczba_stron>30</liczba_stron>		
+					<ocena_podręcznika>7.7</ocena_podręcznika>
+					<cena_podręcznika>89.99</cena_podręcznika>
+				</podręcznik>
+			</podręczniki>	
+
+			<popularność>2</popularność>
+			<format>B5</format>
+
+		</system>			
+
+		<system gatunek_id="gat02" wydawca_id="wyd01">
+			
+			<nazwa>Zew Cthulhu RPG - 7 edycja</nazwa>
+			<kości>
+				<kość liczba_kości="wiele">K100</kość>
+			</kości>			
+			
+			<podręczniki>
+				<podręcznik typ_id="typ01">
+					<tytuł>Zew Ctulhu 7 Edycja - Księga Strażnika Tajemnic</tytuł>
+					<tytuł_oryginalny>Call of Cthulhu 7th Edition - Keeper's Rulebook</tytuł_oryginalny>
+					<data_wydania>16.5.2016</data_wydania>
+					<liczba_stron>488</liczba_stron>
+					<ocena_podręcznika>9.1</ocena_podręcznika>
+					<cena_podręcznika>222.00</cena_podręcznika>
+				</podręcznik>
+
+				<podręcznik typ_id="typ04">
+					<tytuł>Samotnie przeciwko ciemności - Zniweczenie triumfu lodu</tytuł>
+					<tytuł_oryginalny>Alone Against the Dark - Defying the Triumph of the Ice</tytuł_oryginalny>
+					<data_wydania>12.9.2018</data_wydania>
+					<liczba_stron>108</liczba_stron>
+					<ocena_podręcznika>7.8</ocena_podręcznika>
+					<cena_podręcznika>168.25</cena_podręcznika>
+				</podręcznik>
+			</podręczniki>	
+
+			<popularność>21</popularność>
+			<format>A4</format>
+
+		</system>		
+		
+	</kolekcja>
+</rpg>
