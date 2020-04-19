@@ -26,7 +26,7 @@ BEGIN
 
     EXEC (@query) 
 END 
-
+GO
 
 EXEC InsertFromXML 'D:\Nauka\Git\RMSBD\Zad3\rpg.xml';
 GO

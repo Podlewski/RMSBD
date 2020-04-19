@@ -12,7 +12,8 @@ BEGIN
                 + @xmlPath + ''', SINGLE_BLOB) AS DATA' 
 
     EXEC (@query) 
-END 
+END
+GO
 
 
 EXEC InsertFromXML '<PATH_TO_REPO>\RMSBD\Zad3\rpg.xml';
@@ -36,3 +37,4 @@ GO
 
 -- USE
 EXEC xp_cmdshell 'bcp "SELECT * FROM rpg..xml_file FOR XML AUTO, ELEMENTS" queryout "C:\xml_queryout.xml" -c -w -t -T -S <SERVER_NAME>'
+GO
