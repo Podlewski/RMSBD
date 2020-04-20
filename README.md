@@ -8,6 +8,8 @@ Więcej informacji o przedmiocie: [karta przedmiotu](https://programy.p.lodz.pl/
 
 ## Konfiguracja
 
+> UWAGA: Kontener dockerowy wystarcza tylko i wyłącznie do wykonania Zadania 1.
+
 ### Uruchomienie SQL Servera przy użyciu dockerowego kontenera
 
 Mając zainstalowany [Docker for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) oraz ustawione współdzielenie danych na dysku na którym znajduje się kontener wpisujemy w PowerShell komendę:
@@ -44,10 +46,3 @@ Zadanie polega na zaimplementowaniu systemu baz danych dla wybranego obszaru tem
     + wprowadzania danych z dokumentu XML,
     + przeglądania danych XML (całość, wybraną gałąź, atrybut, ...),
     + wyeksportowania danych w postaci dokumentu XML
-4. Przetwarzanie i przeszukiwanie danych XML - minimum 6 zróżnicowanych pod względem budowy procedur / funkcji (na przykład wyszukanie książek o tematyce podobnej do wskazanej przez użytkownika - zawierającej określone wyrażenia (dokumenty XML),
-5. Uwzględnienie w procesie importu / eksportu danych XML różnych przypadków, m<!-- -->.in.:
-    + Import całego pliku XML do jednego wiersza,
-    + Import pliku XML z rozłożeniem na różne wiersze,
-    + Import pliku XML z dopisaniem danych do istniejącego wiersza,
-    + Eksport danych XML z jednego wiersza do jednego pliku,
-    + Eksport danych XML z wielu wierszy do jednego pliku.

@@ -42,10 +42,6 @@
 		<system gatunek_id="gat07" wydawca_id="wyd02">
 			
 			<nazwa>Dark Heresy - 2 Edycja</nazwa>
-			<kości>
-				<kość liczba_kości="wiele">K10</kość>
-				<kość liczba_kości="jedna">K100</kość>
-			</kości>
 			
 			<podręczniki>
 				<podręcznik typ_id="typ01">
@@ -94,7 +90,6 @@
 				</podręcznik>
 			</podręczniki>
 
-			<popularność>14</popularność>
 			<format>A4</format>
 
 		</system>
@@ -102,11 +97,7 @@
 		
 		<system gatunek_id="gat04" wydawca_id="wyd02">
 
-			<nazwa>Warhammer Fantasy Roleplay - 2 Edycja</nazwa>
-			<kości>
-				<kość liczba_kości="wiele">K10</kość>
-				<kość liczba_kości="jedna">K100</kość>
-			</kości>			
+			<nazwa>Warhammer Fantasy Roleplay - 2 Edycja</nazwa>			
 		
 			<podręczniki>
 				<podręcznik typ_id="typ01">
@@ -200,7 +191,6 @@
 				</podręcznik>			
 			</podręczniki>
 
-			<popularność>29</popularność>
 			<format>A4</format>
 
 		</system>
@@ -208,9 +198,6 @@
 		<system gatunek_id="gat08" wydawca_id="wyd05">
 			
 			<nazwa>Wolsung: Magia Wieku Pary</nazwa>
-			<kości>
-				<kość liczba_kości="wiele">K10</kość>
-			</kości>
 			
 			<podręczniki>
 				<podręcznik typ_id="typ01">
@@ -262,17 +249,13 @@
 				</podręcznik>
 			</podręczniki>	
 
-			<popularność>2</popularność>
 			<format>B5</format>
 
 		</system>			
 
 		<system gatunek_id="gat02" wydawca_id="wyd01">
 			
-			<nazwa>Zew Cthulhu RPG - 7 edycja</nazwa>
-			<kości>
-				<kość liczba_kości="wiele">K100</kość>
-			</kości>			
+			<nazwa>Zew Cthulhu RPG - 7 edycja</nazwa>		
 			
 			<podręczniki>
 				<podręcznik typ_id="typ01">
@@ -294,7 +277,6 @@
 				</podręcznik>
 			</podręczniki>	
 
-			<popularność>21</popularność>
 			<format>A4</format>
 
 		</system>		
