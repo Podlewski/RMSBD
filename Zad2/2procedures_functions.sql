@@ -37,3 +37,28 @@ AS
       EXEC(@sql); 
   END 
 GO
+
+
+CREATE OR ALTER PROCEDURE ZapiszPlik (@id INT, @path NVARCHAR(max)) 
+AS 
+  BEGIN
+      DECLARE @image VARBINARY(max);
+      DECLARE @obj INT
+
+      SELECT @image = (SELECT obrazek FROM plakat WHERE plakat_id = @id)
+
+      BEGIN TRY
+        EXEC sp_OACreate 'ADODB.Stream', @obj OUTPUT;
+        EXEC sp_OASetProperty @obj, 'Type', 1;
+        EXEC sp_OAMethod @obj,'Open';
+        EXEC sp_OAMethod @obj,'Write', NULL, @image;
+        EXEC sp_OAMethod @obj,'SaveToFile', NULL, @path, 2;
+        EXEC sp_OAMethod @obj,'Close';
+        EXEC sp_OADestroy @obj;
+      END TRY
+
+      BEGIN CATCH
+        EXEC sp_OADestroy @obj;
+      END CATCH
+  END 
+GO
