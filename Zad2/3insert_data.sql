@@ -9,6 +9,13 @@ GO
 SELECT * FROM plakat
 GO
 
+DECLARE @path VARCHAR(250)
+SET @path = 'D:\\Nauka\\Git\\RMSBD\\Zad2\\Posters\\'
+EXEC WczytajFolder @path;
+GO
+
+SELECT * FROM plakat
+GO
 
 INSERT INTO film (tytul, rok_powstania, gatunek, plakat_id) VALUES
     ('Matrix', 1997, 'sci-fi', 1),
