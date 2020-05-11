@@ -31,3 +31,7 @@ GO
 -- Zapis obrazu do pliku
 EXEC ZapiszPlik 1, '<PATH_TO_REPO>\Zad2\Posters\test.jpg';
 GO
+
+--Zmiana formatu pliku
+EXEC ZmienRozszerzenie 2, 'png'
+GO

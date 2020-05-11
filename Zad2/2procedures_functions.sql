@@ -64,3 +64,43 @@ AS
       END CATCH
   END 
 GO
+
+CREATE OR ALTER PROCEDURE ZmienRozszerzenie (@id INT, @format NVARCHAR(200)) 
+AS 
+  BEGIN 
+      DECLARE @ret VARBINARY(max) 
+      DECLARE @sql NVARCHAR(1000) 
+
+      SET @sql = N'SELECT obrazek FROM plakat where plakat_id = ' 
+                 + Str(@id) 
+      SET NOCOUNT ON 
+
+      BEGIN TRY 
+          EXEC Sp_execute_external_script 
+            @language = N'Python', 
+            @script = N'
+from PIL import Image
+import io
+
+im = Image.open(io.BytesIO(InputDataSet.iloc[0].obrazek))
+with io.BytesIO() as f:
+    im.save(f, format=file_format)
+    ret = f.getvalue()
+',
+            @input_data_1 = @sql, 
+            @params = N'@file_format nvarchar(100), @ret varbinary(max) output', 
+            @file_format = @format, 
+            @ret = @ret output 
+
+          UPDATE plakat 
+          SET    obrazek = @ret 
+          WHERE  plakat_id = @id 
+      END TRY 
+
+      BEGIN CATCH
+          PRINT 'there was an error' 
+      END CATCH 
+
+      SET nocount OFF 
+  END 
+GO
