@@ -2,7 +2,7 @@ USE kino;
 GO 
 
 DECLARE @path VARCHAR(250)
-SET @path = 'D:\Nauka\Git\RMSBD\Zad2\Posters\FileLoad\HarryPotter.jpg'
+SET @path = '<PATH_TO_REPO>\Zad2\Posters\FileLoad\HarryPotter.jpg'
 EXEC WczytajPlik @path;
 GO
 
@@ -10,7 +10,7 @@ SELECT * FROM plakat
 GO
 
 DECLARE @path VARCHAR(250)
-SET @path = 'D:\\Nauka\\Git\\RMSBD\\Zad2\\Posters\\'
+SET @path = '<PATH_TO_REPO>\Zad2\Posters\'
 EXEC WczytajFolder @path;
 GO
 
