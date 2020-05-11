@@ -14,7 +14,7 @@ CREATE TABLE film
     tytul        VARCHAR(100), 
     rok_powstania INTEGER, 
     gatunek       VARCHAR(100),
-    picture_id  INTEGER NOT NULL
+    plakat_id  INTEGER NOT NULL
 ) 
 GO
 
@@ -41,8 +41,9 @@ CREATE TABLE rola
 )
 GO
 
-CREATE TABLE poster (
-    poster_id  INTEGER IDENTITY(1, 1),
-    picture     VARBINARY(MAX) NOT NULL
+CREATE TABLE plakat
+(
+    plakat_id  INTEGER IDENTITY(1, 1),
+    obrazek  VARBINARY(MAX) NOT NULL
 );
 GO
