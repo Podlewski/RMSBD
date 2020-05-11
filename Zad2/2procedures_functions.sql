@@ -18,14 +18,16 @@ GO
 CREATE OR ALTER PROCEDURE WczytajFolder (@path NVARCHAR(max)) 
 AS 
   BEGIN
+      DECLARE @cmd NVARCHAR(max), @sql NVARCHAR(max)
       SET @path = replace(@path, '''', '''''')
 
       DECLARE @filenames TABLE (fname VARCHAR(max)); 
-      DECLARE @cmd NVARCHAR(max) = N'exec xp_cmdshell ''dir '
-                                   + @path + '*.jpg /b'''; 
+      SET @cmd = N'exec xp_cmdshell ''dir ' + @path + '*.jpg /b'''; 
+      INSERT @filenames EXEC(@cmd); 
+      SET @cmd = N'exec xp_cmdshell ''dir ' + @path + '*.png /b'''; 
       INSERT @filenames EXEC(@cmd); 
 
-      DECLARE @sql NVARCHAR(max) = ''; 
+      SET @sql = ''; 
       WITH fullnames 
            AS (SELECT fname = @path + fname 
                FROM   @filenames 
@@ -34,7 +36,7 @@ AS
                     + '((SELECT * FROM OPENROWSET(bulk ''' 
                     + fullnames.fname + N''', SINGLE_BLOB) AS obrazek));' 
       FROM   fullnames; 
-      EXEC(@sql); 
+      EXEC(@sql);
   END 
 GO
 
