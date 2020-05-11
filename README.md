@@ -1,8 +1,8 @@
 # Rozszerzone modelowanie systemów baz danych
 
-<img src="https://static.dwcdn.net/css/flag-icons/flags/4x3/gb.svg" height="10" width="20">Enhanced Modelling of Database Systems classes at Lodz University of Technology (TUL)
+<img src="https://static.dwcdn.net/css/flag-icons/flags/4x3/pl.svg" height="10" width="20"> Laboratoria z **Rozszerzonego modelowania systemów baz danych** na Politechnice Łódzkiej (PŁ). Więcej informacji o przedmiocie: [karta przedmiotu](https://programy.p.lodz.pl/ectslabel-web/przedmiot_3.jsp?l=pl&idPrzedmiotu=172758&pkId=1149&s=1&j=0&w=informatyka%20stosowana&v=3).
 
-Więcej informacji o przedmiocie: [karta przedmiotu](https://programy.p.lodz.pl/ectslabel-web/przedmiot_3.jsp?l=pl&idPrzedmiotu=172758&pkId=1149&s=1&j=0&w=informatyka%20stosowana&v=3)
+<img src="https://static.dwcdn.net/css/flag-icons/flags/4x3/gb.svg" height="10" width="20"> **Enhanced Modelling of Database Systems** classes at Lodz University of Technology (TUL).
 
 ---
 
@@ -35,6 +35,20 @@ Należy opracować system bazodanowy przy następujących założeniach:
 2. Procedury przechowywane (ang. stored procedures) i funkcje (ang. functions) pozwalające na dodawanie, zmianę oraz pobieranie danych z bazy (łącznie przynajmniej 5),
 3. Rozbudowanie procedur i funkcji o złożone konstrukcje programistyczne: instrukcje warunkowe, pętle, kursory, obsługę wyjątków,
 4. Wyzwalacze charakterystyczne dla aktywnych baz danych (przynajmniej 3 różne).
+
+## Zadanie 2
+
+> Należy przyznać odpowiednia uprawienia folderowi, z którego SQL Server będzie odczytywał pliki, więcej [tutaj](https://blog.sqlauthority.com/2016/08/18/sql-server-false-error-cannot-bulk-load-file-not-opened-operating-system-error-code-5-access-denied/)
+
+Zadanie polega na zaimplementowaniu multimedialnego systemu bazodanowego dla wybranego obszaru tematycznego. Należy uwzględnić następujące wytyczne:
+
+1. Schemat bazy danych składa się tabel (więcej niż trzech) umożliwiających przechowywanie w odpowiednich kolumnach danych multimedialnych (przynajmniej jedna tabela musi przechowywać dane multimedialne),
+2. Poszczególne tabele należy wstępnie uzupełnić przykładowymi danymi zgodnymi z charakterystyką obiektów (wprowadzone dane powinny dawać możliwość przetestowania rozwiązania),
+3. Przetwarzanie danych zgromadzonych w bazie odbywa się poprzez odpowiednie procedury i funkcje (odpowiednio rozbudowane), przykłady (tzn. nie ograniczając się do podanych) dla obrazów:
+    + wczytanie obrazu (nazwa / ścieżka podane jako parametr),
+    + wczytanie wszystkich obrazów z danego folderu,
+    + przetworzenie obrazu (zmniejszenie, zmiana formatu),
+    + eksport obrazu.
 
 ## Zadanie 3
 
