@@ -1,6 +1,7 @@
 USE kina_w_lodzi
 GO
 
+-- Procedura #1: Wyświetl dane o kinie po Id
 CREATE OR ALTER PROCEDURE ToString(@id int = NULL)
 AS 
 BEGIN
@@ -30,5 +31,33 @@ BEGIN
 END
 GO
 
-exec ToString 1
-exec ToString
+EXEC ToString 1
+EXEC ToString
+GO
+
+-- Procedura #2: Oblicz odległość miedzy kinami po nazwach
+CREATE OR ALTER PROCEDURE ObliczOdlegloscMiedzyKinami
+    @name1 varchar(255),
+    @name2 varchar(255)
+AS
+BEGIN
+    DECLARE @kino1 geography,
+            @kino2 geography
+    
+    SET @kino1 = (
+        SELECT lokalizacja
+        FROM kino
+        WHERE nazwa like '%' + @name1 + '%'
+    )
+    SET @kino2 = (
+        SELECT lokalizacja
+        FROM kino
+        WHERE nazwa like '%' + @name2 + '%'
+    )
+
+    SELECT ROUND(@kino1.STDistance(@kino2), 2) as 'odległość między kinami [m].'
+END
+GO
+
+EXEC ObliczOdlegloscMiedzyKinami 'manufaktura', 'multikino'
+GO
