@@ -13,10 +13,8 @@ CREATE TABLE kino
     id_kino     INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1), 
     nazwa       VARCHAR(50),
     sale        INTEGER,
-    sale_3d     INTEGER,
     ulica       VARCHAR(100),
     nr_budynku  VARCHAR(10),
-    nr_lokalu   VARCHAR(10),
     lokalizacja geography NOT NULL
 );
 
