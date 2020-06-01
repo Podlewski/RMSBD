@@ -16,6 +16,8 @@ CREATE TABLE kino
     sale_3d     INTEGER,
     ulica       VARCHAR(100),
     nr_budynku  VARCHAR(10),
-    nr_lokalu   VARCHAR(10)
-) 
-GO
+    nr_lokalu   VARCHAR(10),
+    lokalizacja geography NOT NULL
+);
+
+CREATE SPATIAL INDEX lokalizacja_index ON kino(lokalizacja)
