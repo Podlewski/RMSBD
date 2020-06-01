@@ -8,7 +8,7 @@
 
 ## Konfiguracja
 
-> UWAGA: Kontener dockerowy wystarcza tylko i wyłącznie do wykonania Zadania 1.
+> UWAGA: Kontener dockerowy wystarcza tylko i wyłącznie do wykonania Zadania 1 oraz Zadania 4. Do uruchomienia skryptów z Zadań 2 i 3 wymagana jest lokalna kopia SQL Servera.
 
 ### Uruchomienie SQL Servera przy użyciu dockerowego kontenera
 
@@ -59,4 +59,15 @@ Zadanie polega na zaimplementowaniu systemu baz danych dla wybranego obszaru tem
 3. Opracowanie odpowiednich procedur:
     + wprowadzania danych z dokumentu XML,
     + przeglądania danych XML (całość, wybraną gałąź, atrybut, ...),
-    + wyeksportowania danych w postaci dokumentu XML
+    + wyeksportowania danych w postaci dokumentu XML.
+
+## Zadanie 4
+
+Zadanie polega na zaimplementowaniu systemu baz danych dla wybranego obszaru tematycznego. W systemie podstawową rolę powinna odgrywać obsługa danych przestrzennych. Należy uwzględnić następujące wytyczne:
+
+1. Schemat bazy danych powinien uwzględniać możliwość przechowywania danych typów przestrzennych,
+2. Tabele powinny zostać wstępnie uzupełnione danymi,
+3. Powinny zostać zdefiniowane indeksy przestrzenne,
+4. Powinny zostać zdefiniowane przykładowe (sparametryzowane) procedury:
+    + do wyświetlania danych w sposób przyjazny użytkownikowi;
+    + do ładowania danych jako geometrii różnych typów (punkty, linie, wielokąty, …)
