@@ -60,6 +60,58 @@ GO
 EXEC ObliczOdlegloscMiedzyKinami 'manufaktura', 'multikino'
 GO
 
+-- Procedura #3: Policz oraz wypisz kina w danym obszarze
+CREATE OR ALTER PROCEDURE WypiszKinaWObszarze (@geometria VARCHAR(MAX))
+AS
+BEGIN
+    DECLARE @obszar geography, @bool bit
+    SET @geometria = 'POLYGON((' + @geometria + '))'
+    SET @obszar = geography::STPolyFromText(@geometria, 4326)
+    SET @bool = 0
+
+    DECLARE Kursor CURSOR FOR SELECT nazwa, lokalizacja FROM kino
+
+    DECLARE @nazwa VARCHAR(100), @lokalizacja geography 
+    OPEN Kursor
+    FETCH NEXT FROM Kursor INTO @nazwa, @lokalizacja
+
+    WHILE @@FETCH_STATUS = 0
+      BEGIN
+        IF (@lokalizacja.STIntersects(@obszar) = 1)
+        BEGIN
+          SET @bool = 1
+          PRINT(@nazwa)
+        END
+        
+        FETCH NEXT FROM Kursor INTO @nazwa, @lokalizacja
+        
+      END
+
+      IF(@bool = 0)
+        PRINT('Nie ma kin w obsarze')
+
+    CLOSE Kursor
+    DEALLOCATE Kursor
+  END
+GO
+
+-- Wszystkie kina
+EXEC WypiszKinaWObszarze '19.4 51.7, 19.5 51.7, 19.5 51.8, 19.4 51.8, 19.4 51.7'
+GO
+
+-- Obszar nie obejmujący kin
+EXEC WypiszKinaWObszarze '18.4 51.7, 18.5 51.7, 18.5 51.8, 18.4 51.8, 18.4 51.7'
+GO
+
+--  Przykładowe kina #1
+EXEC WypiszKinaWObszarze '19.44 51.75, 19.46 51.75, 19.46 51.77, 19.44 51.77, 19.44 51.75'
+GO
+
+-- Przykładowe kina #2
+EXEC WypiszKinaWObszarze '19.45 51.74, 19.47 51.74, 19.47 51.76, 19.45 51.76, 19.45 51.74'
+GO
+
+
 -- Procedura #4: Dodaj nowe kino wraz z lokalizacją
 CREATE OR ALTER PROCEDURE DodajKino
     @nazwa VARCHAR(50),
@@ -70,7 +122,7 @@ CREATE OR ALTER PROCEDURE DodajKino
     @wspolrzedna2 varchar(100)
 AS
 BEGIN
-    DECLARE @geometria varchar(1000)
+    DECLARE @geometria varchar(MAX)
     SET @geometria = 'POINT ( +' + @wspolrzedna2 + ' ' + @wspolrzedna1 + ')'
 
     INSERT INTO kino
