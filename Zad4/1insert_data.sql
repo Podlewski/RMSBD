@@ -1,6 +1,6 @@
 USE kina_w_lodzi
 
-INSERT INTO kino (nazwa, sale, ulica, numer_budynku, lokalizacja)
+INSERT INTO kino (nazwa, sale, ulica, nr_budynku, lokalizacja)
 VALUES
     ('Cinema City - Manufaktura', 14, 'Drewnowska', '58', geography::Point(51.780670, 19.446750, 4326)),
     ('Multikino', 10, 'Marszałka Józefa Piłsudskiego', '5', geography::Point(51.759080, 19.460810, 4326)), 
