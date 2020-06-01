@@ -9,10 +9,8 @@ BEGIN
         SELECT id_kino
             ,nazwa
             ,sale
-            ,sale_3d
             ,ulica
             ,nr_budynku
-            ,nr_lokalu
             ,lokalizacja.Lat AS 'Szerokość'
             ,lokalizacja.Long AS 'Długość'
         FROM kino
@@ -20,10 +18,8 @@ BEGIN
         SELECT id_kino
             ,nazwa
             ,sale
-            ,sale_3d
             ,ulica
             ,nr_budynku
-            ,nr_lokalu
             ,lokalizacja.Lat AS 'Szerokość'
             ,lokalizacja.Long AS 'Długość'
             FROM kino
