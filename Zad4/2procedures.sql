@@ -59,3 +59,26 @@ GO
 
 EXEC ObliczOdlegloscMiedzyKinami 'manufaktura', 'multikino'
 GO
+
+-- Procedura #4: Dodaj nowe kino wraz z lokalizacją
+CREATE OR ALTER PROCEDURE DodajKino
+    @nazwa VARCHAR(50),
+    @sale INTEGER,
+    @ulica VARCHAR(100),
+    @nr_budynku VARCHAR(10),
+    @wspolrzedna1 varchar(100),
+    @wspolrzedna2 varchar(100)
+AS
+BEGIN
+    DECLARE @geometria varchar(1000)
+    SET @geometria = 'POINT ( +' + @wspolrzedna2 + ' ' + @wspolrzedna1 + ')'
+
+    INSERT INTO kino
+        (nazwa, sale, ulica, nr_budynku, lokalizacja)
+    VALUES
+        (@nazwa, @sale, @ulica, @nr_budynku, geography::STPointFromText(@geometria, 4326))
+END
+GO
+
+EXEC DodajKino 'test', 14, 'Drewnowska', '58', '51.780670', '19.446750'
+GO
