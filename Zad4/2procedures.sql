@@ -55,7 +55,9 @@ BEGIN
         WHERE nazwa like '%' + @name2 + '%'
     )
 
-    SELECT ROUND(@kino1.STDistance(@kino2), 2) as 'odległość między kinami [m].'
+    DECLARE @distance FLOAT = ROUND(@kino1.STDistance(@kino2), 2)
+
+    PRINT N'Odległość między kinami to ' + (CAST(@distance as nvarchar)) + ' metrów.'
 END
 GO
 
