@@ -286,7 +286,7 @@ GO
 /*
 -- przyklad dzialania
 INSERT INTO rezerwacja VALUES (1, 'Zbysio', 'Enowski', 3, NULL)
-SELECT * FROM rezerwacje WHERE nazwisko = 'Enowski'
+SELECT * FROM rezerwacja WHERE nazwisko = 'Enowski'
 GO
 */
 

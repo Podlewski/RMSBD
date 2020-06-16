@@ -27,9 +27,11 @@ BEGIN
 END
 GO
 
+/*
+-- Przykłady użycia:
 EXEC ToString 1
 EXEC ToString
-GO
+*/
 
 -- Procedura #2: Oblicz odległość miedzy kinami po nazwach
 CREATE OR ALTER PROCEDURE ObliczOdlegloscMiedzyKinami
@@ -57,8 +59,12 @@ BEGIN
 END
 GO
 
+/*
+-- Przykład użycia:
 EXEC ObliczOdlegloscMiedzyKinami 'manufaktura', 'multikino'
 GO
+*/
+
 
 -- Procedura #3: Policz oraz wypisz kina w danym obszarze
 CREATE OR ALTER PROCEDURE WypiszKinaWObszarze (@geometria VARCHAR(MAX))
@@ -95,6 +101,9 @@ BEGIN
   END
 GO
 
+/*
+-- Przykłady użycia:
+
 -- Wszystkie kina
 EXEC WypiszKinaWObszarze '19.4 51.7, 19.5 51.7, 19.5 51.8, 19.4 51.8, 19.4 51.7'
 GO
@@ -110,6 +119,7 @@ GO
 -- Przykładowe kina #2
 EXEC WypiszKinaWObszarze '19.45 51.74, 19.47 51.74, 19.47 51.76, 19.45 51.76, 19.45 51.74'
 GO
+*/
 
 
 -- Procedura #4: Dodaj nowe kino wraz z lokalizacją
@@ -132,5 +142,8 @@ BEGIN
 END
 GO
 
+/*
+-- Przykład użycia:
 EXEC DodajKino 'test', 14, 'Drewnowska', '58', '51.780670', '19.446750'
 GO
+*/
